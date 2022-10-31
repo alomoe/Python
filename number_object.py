@@ -38,7 +38,7 @@ forms =[0,0,0,0,0]
 
 for i in range(0, len(mask)):
     erosed = binary_erosion(labeled, mask[i])
-    erosed = label(erosed1)
+    erosed = label(erosed)
     k = erosed.max()
     forms[i]=k
         
