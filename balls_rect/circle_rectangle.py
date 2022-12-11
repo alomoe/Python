@@ -1,6 +1,4 @@
 import matplotlib.pyplot as plt
-from skimage.filters import sobel
-from skimage.morphology import binary_closing, binary_opening
 from skimage.measure import label, regionprops
 from skimage import color
 import numpy as np
