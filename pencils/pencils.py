@@ -6,11 +6,10 @@ from skimage.filters import  gaussian, threshold_otsu
 
 sum=0
 number=0
-
 for i in range(1,13):
     sum_image=0
     number+=1
-
+    
     image = plt.imread("C:\\Users\\Public\\Pictures\\images\\img ("+str(i)+").jpg")
     image = np.mean(image,2)
     image = gaussian(image, sigma=19)
