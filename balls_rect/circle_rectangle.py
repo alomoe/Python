@@ -10,7 +10,6 @@ hsv = color.rgb2hsv(image)[:, :, 0]
 binary = hsv.copy()
 binary[binary > 0] = 1
 labeled = label(binary)
-regions = regionprops(labeled)
 
 color_r=[]
 color_c=[]
