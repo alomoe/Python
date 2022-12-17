@@ -20,10 +20,8 @@ blue_lower = np.array([80,230,100])
 blue_upper = np.array([150,255,170])
 
 random.shuffle(color_str)
-print(color_str)
-while cam.isOpened():
-    
-    
+
+while cam.isOpened():  
     _, frame = cam.read()
     frame = cv2.GaussianBlur(frame, (21,21), 0)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -35,41 +33,41 @@ while cam.isOpened():
     contours_r, _ = cv2.findContours(mask_red, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours_b, _ = cv2.findContours(mask_blue, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours_y, _ = cv2.findContours(mask_yellow, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    color1=None
-    color2=None
-    color3=None
+    
     posledov={}
 
     for i in range(0,3):
         if len(contours_r) > 0:
-            cr = max(contours_r, key=cv2.contourArea)
-            (xr,yr), radiusr = cv2.minEnclosingCircle(cr)
-            if radiusr > 20:
-                cv2.circle(frame, (int(xr), int(yr)), int(radiusr), (0,255,255), 0)
-                color1="red"
-                posledov[color1]=xr
+            c = max(contours_r, key=cv2.contourArea)
+            (x,y), radius = cv2.minEnclosingCircle(c)
+            if radius > 20:
+                cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 0)
+                color="red"
+                posledov[color]=x
         if len(contours_b) > 0:
-            cb = max(contours_b, key=cv2.contourArea)
-            (xb,yb), radiusb = cv2.minEnclosingCircle(cb)
-            if radiusb > 20:
-                cv2.circle(frame, (int(xb), int(yb)), int(radiusb), (0,255,255), 0)
+            c = max(contours_b, key=cv2.contourArea)
+            (x,y), radius = cv2.minEnclosingCircle(c)
+            if radius > 20:
+                cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 0)
                 color2="blue"
-                posledov[color2]=xb
+                posledov[color2]=x
         if len(contours_y) > 0:
-            cy = max(contours_y, key=cv2.contourArea)
-            (xy,yy), radiusy = cv2.minEnclosingCircle(cy)
-            if radiusy > 20:
-                cv2.circle(frame, (int(xy), int(yy)), int(radiusy), (0,255,255), 0)
+            c = max(contours_y, key=cv2.contourArea)
+            (x,y), radius = cv2.minEnclosingCircle(c)
+            if radius > 20:
+                cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 0)
                 color3="yellow"
-                posledov[color3]=xy
-    sorted_tuple = sorted(posledov,key=posledov.get)
+                posledov[color3]=x
+    sorted_posledov = sorted(posledov,key=posledov.get)
     count=0
-    for i in range(0,len(sorted_tuple)):
-        if sorted_tuple[i]==color_str[i]:
+    for i in range(0,len(sorted_posledov)):
+        if sorted_posledov[i]==color_str[i]:
             count+=1
-
+            
     if count==3:
         cv2.putText(frame,f"perfect!", (10,30), cv2.FONT_HERSHEY_COMPLEX, 0.7, (255,255,0))
+    else:
+        cv2.putText(frame,f"try again!", (10,30), cv2.FONT_HERSHEY_COMPLEX, 0.7, (255,255,0))
 
     cv2.imshow("Image", frame)
     key = cv2.waitKey(50)
