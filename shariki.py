@@ -33,7 +33,7 @@ while cam.isOpened():
     contours_r, _ = cv2.findContours(mask_red, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours_b, _ = cv2.findContours(mask_blue, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contours_y, _ = cv2.findContours(mask_yellow, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
+    color=None
     posledov={}
 
     for i in range(0,3):
@@ -49,15 +49,15 @@ while cam.isOpened():
             (x,y), radius = cv2.minEnclosingCircle(c)
             if radius > 20:
                 cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 0)
-                color2="blue"
-                posledov[color2]=x
+                color="blue"
+                posledov[color]=x
         if len(contours_y) > 0:
             c = max(contours_y, key=cv2.contourArea)
             (x,y), radius = cv2.minEnclosingCircle(c)
             if radius > 20:
                 cv2.circle(frame, (int(x), int(y)), int(radius), (0,255,255), 0)
-                color3="yellow"
-                posledov[color3]=x
+                color="yellow"
+                posledov[color]=x
     sorted_posledov = sorted(posledov,key=posledov.get)
     count=0
     for i in range(0,len(sorted_posledov)):
